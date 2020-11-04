@@ -1,0 +1,92 @@
+
+
+
+SKATING
+
+Newt. 1st law of motion:
+An object that is free of external forces moves at a constant velocity.
+
+Newt. 2nd law of motion:
+acceleration = net force/mass
+(acc in same direct. as force)
+<=>
+net force = acc. * mass
+F = a*m
+
+weight= downward force due to gravity = 9.8 N/kg  * mass
+        =      g    * mass
+
+mass= resistance to acceleration
+
+3 
+BALLS
+
+balls fall 42 at same pace, eventhough different weights. explanation: more weight, slower acceleration! 
+=> cancellation: 
+more weight -> more acceleration = more mass -> more resistance to acceleration.
+
+downyard horizontal motion unaffection by vertical falling motion! 
+
+increasing acc. downwards by ~10mps
+
+RAMPS
+Energy (e.g. grav. pot. E.)
+Work (change E. in s.th. by moving it)
+Work is the same if you lift s.th. vertically 1m high and if you use a slanted ramp until it reaches the height of 1m. (i.e. work same, because energy-increase is same)
+
+support forces exerted perpendicular to surface
+
+Downhill Ramp Force = residual of upward supportforce perp. to surface and downward weight of car. (and will cause car to acceleration downhill)
+
+Newt. 3rd law of motion: 
+For every force one object exerts on a second object, the second object exerts the same force on the first.
+
+SEESAWS
+
+Rotation about its own center of mass, its own natural pivot
+
+Seesaw is balanced - no torque due to gravity, because center of gravity is located right at the center of mass as well. 
+
+Newt. 1st law of rotational motion:
+Not external torques => constant angular velocity
+
+Newt. 2nd law of rot. motion: 
+The angular acc. = net torque / rotational mass
+
+Newt. 3rd law of rot. motion: 
+For every applied torque, there is an equal and opposite reaction torque.
+
+WHEELS
+
+Without Wheels => Sliding friction
+Adding Wheels eliminates slid. fric.
+Wheels only have static friction, doesn't waste as much E.
+Even that static fric. can be eliminated by inserting roller bearings / ball bearings betw. hub & axle.
+
+When pulling wagon forward the sidewalk exerts static fric. forces on wheels => produce torques on the wheels => cause angular acc.
+
+in contrast: when you pedal a bicycle, you exert a torque on that powered rear wheel and causing the sidewalk to exert a forward static friction
+
+Wheels have kinetic E. 
+
+BUMPER CARS
+Energie, momentum, ang. momentum.
+Collision: One doing work on the other -> give other car some of its E.
+When 2 collide -> transfer momentan by way of impulse (force*time)
+Depending on masses of cars.
+
+Angular momentan, typically transferred during a glancing collision (when one car clips the edge of the second car, second car gets spun around) => angular momentum is transf. into the second car about its center of mass by way of angular impulse!
+
+Energy: You always accelerate in the direction that reduces your energy as quickly as possible, i.e. opposite the local potential energy gradient!
+
+
+
+
+
+
+
+
+
+
+
+
