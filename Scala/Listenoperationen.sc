@@ -61,10 +61,22 @@ def fusetolist(lls:List[List[_]]):List[_] = {
   else lls.head:::fusetolist(lls.tail)
 }
 
+//Prüft, ob eine Liste aufsteigend sortiert ist
+def istAufsteigend(ls:List[Int]):Boolean = {
+  if (ls.tail.isEmpty) true
+  else if (ls.head <= ls.tail.head) istAufsteigend(ls.tail)
+  else false
+}
 
 
+//Prüft, ob zwei Listen bis auf Reihenfolge gleich sind (Permutation voneinander)
+def istPerm(l1:List[Int],l2:List[Int]):Boolean =  {
+  val gesamtlst=l1:::l2
+  def hilfsPerm(l0:List[Int],l1:List[Int],l2:List[Int]):Boolean = l0 match {
+    case List() => true
+    case y::ys => (howmany(l1,y)==howmany(l2,y))&&hilfsPerm(ys,l1,l2)
 
-
-
-
+  }
+  hilfsPerm(gesamtlst,l1,l2)
+}
 
