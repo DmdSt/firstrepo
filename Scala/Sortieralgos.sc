@@ -47,5 +47,4 @@ if (ls == List()) List()
 else mPass(inEinzelne(ls),List())
 }
 
-val g=List(42, 73, 55, 10, 55, 25, 50, 400, -5)
-mergeSort(g)
+
