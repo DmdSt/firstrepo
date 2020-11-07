@@ -16,16 +16,36 @@ val result=Insertionsort(z)
 
 
 //MERGESORT - Sortiert durch Verzahnung je zweiter benachbarter Listen
-//Hilfsfunktion "merge" - verzahnt zwei sortierte Listen zu einer sort. Liste
-def merge(a:List[Int],b:List[Int]):List[Int] = (a,b) match {
-  case (x::xs,y::ys) =>
-    if (x<=y) x::merge(xs,b)
-    else y::merge(a,ys)
-  case _ => a:::b
+//Hilfsfunktion - Liste aufspalten in Liste von einelem. Listen
+def inEinzelne(ls:List[Int]):List[List[Int]] = {
+  if (ls.isEmpty) List()
+  else List(ls.head)::inEinzelne(ls.tail)
 }
-//TeSt: merge(List(1,4),List(2,3))
 
-//Hilfsfunktion "mPass" - verzahnt je zwei benachbarte Listen (unter Nutzung von merge)
-def mPass(tosort:List[List[Int]],result:List[List[Int]]):List[Int] = {
-  ...
+//Hauptfunktion Mergesort:
+def mergeSort (ls:List[Int]):List[Int] = {
+
+  //Hilfsfunktion "mPass" - verzahnt je zwei benachbarte Listen (unter Nutzung von merge)
+  def mPass(tosort:List[List[Int]],result:List[List[Int]]):List[Int] = {
+
+    //Hilfsfunktion "merge" - verzahnt zwei sortierte Listen zu einer sort. Liste
+    def merge(a:List[Int],b:List[Int]):List[Int] = (a,b) match {
+      case (x::xs,y::ys) =>
+        if (x<=y) x::merge(xs,b)
+        else y::merge(a,ys)
+      case _ => a:::b
+    }
+
+    val gesamt = tosort:::result;
+    if (tosort.length > 1)
+      mPass(tosort.tail.tail,merge(tosort.head,tosort.tail.head)::result)
+    else if (gesamt.length == 1) gesamt.head
+    else mPass(gesamt, List())
+  }
+
+if (ls == List()) List()
+else mPass(inEinzelne(ls),List())
 }
+
+val g=List(42, 73, 55, 10, 55, 25, 50, 400, -5)
+mergeSort(g)
