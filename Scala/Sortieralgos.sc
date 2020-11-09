@@ -47,4 +47,26 @@ if (ls == List()) List()
 else mPass(inEinzelne(ls),List())
 }
 
+// MAXSORT:
+//Hauptfunktion MAXSORT - sortiert Liste in aufsteigender Reihenfolge durch fortgesetzte Maximumextraktion
+def maxSort(lst:List[Int]):List[Int] = {
+  //Hilfsfunk. maxOfList - Liefert größtes Element einer nichtleeren Liste
+  def maxOfList(ls:List[Int]):Int = {
+    if (ls.tail.isEmpty) ls.head
+    else if (ls.head >= maxOfList(ls.tail)) ls.head
+    else maxOfList(ls.tail)
+  }
+  //Hilfsfunk. streiche - Falls y nicht in Liste, liefer Liste, sonst streiche das erste Vorkommen von y aus Liste.
+  def streiche(Streichzahl:Int,ls:List[Int]):List[Int] = ls match {
+    case y::ys => if (y==Streichzahl) ls.tail
+    else y::streiche(Streichzahl,ls.tail)
+    case _ => ls
+  }
 
+  val max=maxOfList(lst)
+  if (streiche(max,lst).isEmpty) List()
+  else maxSort(streiche(max,lst)):::List(max)
+}
+
+val r=List(2,3,51,2,3,1,27,0,8)
+val w=maxSort(r)
