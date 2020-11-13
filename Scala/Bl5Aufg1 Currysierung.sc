@@ -24,6 +24,20 @@ val t= curryZweistelligInt((a:Int,b:Int)=>a-b) // t ist jetzt die Funktion curry
 val r = t(3) // t(3) ist jetzt curry(3:Int) und liefert f(3,y) = f(3)_
 val s = r(5) // r(5) ist dann f(3)(5) und liefert f(3,5) = 3-5 = -2
 
+//Aufg. 1d)
+// Baue Funktion, die currysierte Funktion erhält diese ent-currysiert.
+def unCurryZweistelligInt(f: Int => (Int => Int)): (Int,Int) => Int = {
+  def uncurry(x:Int,y:Int): Int =  f(x)(y)
+  uncurry
+}
+
+//Test: Einmal eine Multiplikationsfunktion currysieren und entcurrysieren:
+def f(a:Int,b:Int):Int = a*b
+val cuf = curryZweistelligInt(f)
+cuf(3)(4)  // liefert 12 wie erhofft
+
+val entcuf = unCurryZweistelligInt(cuf) // cuf von eben wird wieder ent-currysiert
+entcuf(2,5) // liefert 10 wie erhofft
 
 
 
