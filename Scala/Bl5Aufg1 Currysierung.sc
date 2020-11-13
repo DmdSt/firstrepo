@@ -39,5 +39,15 @@ cuf(3)(4)  // liefert 12 wie erhofft
 val entcuf = unCurryZweistelligInt(cuf) // cuf von eben wird wieder ent-currysiert
 entcuf(2,5) // liefert 10 wie erhofft
 
+//Aufg. 1d)
+// Nutze Funktion modifylist, um jedes Elem. einer geg. Liste um 5 zu erhöhen (mit Currying der Additionsfunktion):
+def modifyList(l: List[Int], f: Int => Int): List[Int] = l match {
+  case x::xs => f(x) :: modifyList(xs, f)
+  case List() => List()
+}
+val l: List[Int] = List(1,2,3,4,5)
+val curadd5 = curryZweistelligInt((x:Int,y:Int)=>x+y)(5)
+val l2 = modifyList(l,curadd5)
 
-
+// noch kürzer:
+val l3 = modifyList(l,curryZweistelligInt((x:Int,y:Int)=>x+y)(5))
