@@ -12,7 +12,7 @@ def Insertionsort(quelle:List[Int]):List[Int] = {
   }
 }
 val z=List(42, 73, 55, 10, 55, 25, 50, 400, -5)
-val result=Insertionsort(z)
+val result = Insertionsort(z)
 
 
 //MERGESORT - Sortiert durch Verzahnung je zweiter benachbarter Listen
@@ -36,7 +36,7 @@ def mergeSort (ls:List[Int]):List[Int] = {
       case _ => a:::b
     }
 
-    val gesamt = tosort:::result;
+    val gesamt = tosort:::result
     if (tosort.length > 1)
       mPass(tosort.tail.tail,merge(tosort.head,tosort.tail.head)::result)
     else if (gesamt.length == 1) gesamt.head
@@ -59,7 +59,7 @@ def maxSort(lst:List[Int]):List[Int] = {
   //Hilfsfunk. streiche - Falls y nicht in Liste, liefer Liste, sonst streiche das erste Vorkommen von y aus Liste.
   def streiche(Streichzahl:Int,ls:List[Int]):List[Int] = ls match {
     case y::ys => if (y==Streichzahl) ls.tail
-    else y::streiche(Streichzahl,ls.tail)
+                  else y::streiche(Streichzahl,ls.tail)
     case _ => ls
   }
 
@@ -69,9 +69,9 @@ def maxSort(lst:List[Int]):List[Int] = {
     maxSort(streiche(max,lst)):::List(max)
   }
 }
-
+//Testaufrufe
 val r=maxSort(List(2,3,51,2,3,1,27,0,8))
 val q=maxSort(List(1,2))
 val v=maxSort(List(2,1))
 val w=maxSort(List(3))
-val z=maxSort(List())
+val p=maxSort(List())

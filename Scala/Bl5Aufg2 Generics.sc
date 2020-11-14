@@ -27,8 +27,11 @@ def kgAnzahl(e1:Kassenzetteleintrag,e2:Kassenzetteleintrag):Boolean = e1._1 <= e
 def kgName(e1:Kassenzetteleintrag,e2:Kassenzetteleintrag):Boolean = e1._2 <= e2._2
 def kgPreis(e1:Kassenzetteleintrag,e2:Kassenzetteleintrag):Boolean = e1._3 <= e2._3
 
-def Postenpreis(bonzeile:Kassenzetteleintrag):Double = bonzeile._1 * bonzeile._3
-def kgPostenpreis(e1:Kassenzetteleintrag,e2:Kassenzetteleintrag):Boolean = Postenpreis(e1) <= Postenpreis(e2)
+def kgPostenpreis(e1:Kassenzetteleintrag,e2:Kassenzetteleintrag):Boolean = {
+  def Postenpreis(bonzeile:Kassenzetteleintrag):Double = bonzeile._1 * bonzeile._3
+  Postenpreis(e1) <= Postenpreis(e2)
+}
+
 def gleich(e1:Kassenzetteleintrag,e2:Kassenzetteleintrag):Boolean = (e1,e2) match {
   case ((m,s,p),(m2,s2,p2)) => m==m2 && s==s2 && p==p2
 }
@@ -37,12 +40,12 @@ def gleich(e1:Kassenzetteleintrag,e2:Kassenzetteleintrag):Boolean = (e1,e2) matc
 // Wandle den MaxSort-Algo in generische Variante um:
 
 //Hauptfunktion MAXSORT - sortiert Liste in aufsteigender Reihenfolge durch fortgesetzte Maximumextraktion
-def maxSort[T](grgl:(T,T)=>Boolean)(lst:List[T]):List[T] = {
+def maxSort[T](kg:(T,T)=>Boolean)(lst:List[T]):List[T] = {
   //Hilfsfunk. maxOfList - Liefert größtes Element einer nichtleeren Liste
-  def maxOfList[T](grgl:(T,T)=>Boolean)(ls:List[T]):T = {
+  def maxOfList[T](kg:(T,T)=>Boolean)(ls:List[T]):T = {
     if (ls.tail.isEmpty) ls.head
-    else if (grgl(ls.head,maxOfList(grgl)(ls.tail))) ls.head
-    else maxOfList(grgl)(ls.tail)
+    else if (kg(ls.head,maxOfList(kg)(ls.tail))) maxOfList(kg)(ls.tail)
+    else ls.head
   }
   //Hilfsfunk. streiche - Falls y nicht in Liste, liefer Liste, sonst streiche das erste Vorkommen von y aus Liste.
   def streiche[T](Streichzahl:T,ls:List[T]):List[T] = ls match {
@@ -51,16 +54,67 @@ def maxSort[T](grgl:(T,T)=>Boolean)(lst:List[T]):List[T] = {
     case _ => ls
   }
 
-  val max=maxOfList[T](grgl)(lst)
-  if (streiche(max,lst).isEmpty) List()
-  else maxSort[T](grgl)(streiche(max,lst)):::List(max)
+  if (lst.length < 2) lst
+  else {
+    val max=maxOfList(kg)(lst)
+    maxSort(kg)(streiche(max,lst)):::List(max)
+  }
 }
 
-def maxSortInt = maxSort[Int](_>=_)_
-def maxSortString = maxSort[String](_>=_)_
-def maxSortDouble = maxSort[Double](_>=_)_
+//Aufg. 2d) Bilde Sortierfunktionen für Anzahl, Name, Preis und Postenpreis (=Anzahl*Preis) eines Kassenzettels
+def maxSortAnzahl = maxSort[Kassenzetteleintrag](kgAnzahl)_
+def maxSortName = maxSort[Kassenzetteleintrag](kgName)_
+def maxSortPreis = maxSort[Kassenzetteleintrag](kgPreis)_
+def maxSortPostenpreis = maxSort[Kassenzetteleintrag](kgPostenpreis)_
 
 
+val z1:Kassenzettel = List((50,"Benzin",1.37),(2,"Scheibenwischer",5.00),(1,"Autowaesche",10.00),(1,"Kaugummi",0.99))
+val z1AnzahlSortiert = maxSortAnzahl(z1)
+val z1NameSortiert = maxSortName(z1)
+val z1PreisSortiert = maxSortPreis(z1)
+val z1PostenpreisSortiert = maxSortPostenpreis(z1)
 
-val r=List(2,3,51,2,3,1,27,0,8)
-val w=maxSortInt(r)
+val z2:Kassenzettel = List((3,"Mars",0.80),(1,"Kaffee",1.60),(10,"Scheibenwischer",1.59))
+val z2AnzahlSortiert = maxSortAnzahl(z2)
+val z2NameSortiert = maxSortName(z2)
+val z2PreisSortiert = maxSortPreis(z2)
+val z2PostenpreisSortiert = maxSortPostenpreis(z2)
+
+val z3:Kassenzettel = List((5,"Mars",0.80),(10,"Scheibenwischer",1.59))
+val z3AnzahlSortiert = maxSortAnzahl(z3)
+val z3NameSortiert = maxSortName(z3)
+val z3PreisSortiert = maxSortPreis(z3)
+val z3PostenpreisSortiert = maxSortPostenpreis(z3)
+
+//Aufg. 2e)
+// kgGesamtpreis vergleicht Gesamtpreise der Bons (=Summe der Postenpreise)
+def kgGesamtpreis(k1:Kassenzettel,k2:Kassenzettel):Boolean = {
+  def Gesamtpreis(Bon:Kassenzettel):Double = Bon match {
+    case List() => 0.0
+    case ((m,_,p)::xs) => m*p+Gesamtpreis(xs)
+  }
+  // vergleiche im Falle gleichen Gesamtpreises die Anzahl der Einträge der Bons
+  if (Gesamtpreis(k1)==Gesamtpreis(k2)) k1.length <= k2.length
+  else (Gesamtpreis(k1) < Gesamtpreis(k2))
+}
+
+// Funktion, die überprüft, ob zwei Bons identisch sind (hab ich nicht benötigt)
+def gleichKassenzettel(k1:Kassenzettel,k2:Kassenzettel):Boolean = {
+  def gleich(e1:Kassenzetteleintrag,e2:Kassenzetteleintrag):Boolean = (e1,e2) match {
+    case ((m1,s1,p1),(m2,s2,p2)) => m1==m2 && s1==s2 && p1==p2
+  }
+  if (k1.length == k2.length) {
+    if (k1.isEmpty) true
+    else {
+      val y::ys = k1
+      val x::xs = k2
+      gleich(y,x) && gleichKassenzettel(ys,xs)
+    }
+  }
+  else false
+}
+
+//Aufg. 2f)
+// Sortiere Listen nun nach dem Gesamtpreis
+def maxSortGesamtpreis = maxSort[Kassenzettel](kgGesamtpreis)_
+val BonsNachGesamtpreisSortiert = maxSortGesamtpreis(List(z1,z2,z3))
