@@ -63,10 +63,15 @@ def maxSort(lst:List[Int]):List[Int] = {
     case _ => ls
   }
 
-  val max=maxOfList(lst)
-  if (streiche(max,lst).isEmpty) List()
-  else maxSort(streiche(max,lst)):::List(max)
+  if (lst.length < 2) lst
+  else {
+    val max=maxOfList(lst)
+    maxSort(streiche(max,lst)):::List(max)
+  }
 }
 
-val r=List(2,3,51,2,3,1,27,0,8)
-val w=maxSort(r)
+val r=maxSort(List(2,3,51,2,3,1,27,0,8))
+val q=maxSort(List(1,2))
+val v=maxSort(List(2,1))
+val w=maxSort(List(3))
+val z=maxSort(List())
