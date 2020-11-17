@@ -75,3 +75,24 @@ val q=maxSort(List(1,2))
 val v=maxSort(List(2,1))
 val w=maxSort(List(3))
 val p=maxSort(List())
+
+//QUICKSORT
+def qcksort(lst:List[Int]):List[Int] = lst match {
+  case List() => List()
+  case x :: xs => {
+    val linkeliste = for (kleinereElem <- xs; if kleinereElem <= x) yield kleinereElem
+    val rechteliste = for (groessereElem <- xs; if groessereElem > x) yield groessereElem
+    qcksort(linkeliste) ::: List(x) ::: qcksort(rechteliste)
+  }
+}
+qcksort(List(0, 1, 2, 2, 3, 3, 8, 27, 51))
+qcksort(List(42, 73, 55, 10, 55, 25, 50, 400, -5))
+qcksort((50 to 1 by -7).toList)
+
+
+
+
+
+
+
+
