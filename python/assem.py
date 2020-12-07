@@ -2,11 +2,9 @@
 import re  # imports regular expressions
 from patternmatch import jumpsToBinary,compTobinary,destToBinary
 
-
 outputtext="".rstrip()
 instruction = ""
 lineresult = ""
-
 instructionnumber=-1
 ramadress=16
 symboltable=dict()
@@ -16,15 +14,12 @@ symboltable={"R0":0,"R1":1,"R2":2,"R3":3,"R4":4,"R5":5,"R6":6,"R7":7,"R8":8,
 
 #print('------------------------------------------------------START')
 tname=input('Enter name of text file: ')
-way1=False
 try:
     textfile=open(tname)
     #print('opened the textfile.')
-    way1=True
 except:
     #print('cannot open textfile!')
     handtext=input('Enter a text by hand: ')
-    way1=False
 
 # 1. Durchlauf: Labels und Symbole verarbeiten
 for line in textfile:
@@ -32,9 +27,9 @@ for line in textfile:
         continue
     else:
         if line.startswith("("): # Label (xxx) gefunden
-            print(line)
+            #print(line)
             matchobject = re.search(r"\(([A-Za-z0-9_]+)\)", line) #extrahiert String xxx aus "(xxx)"
-            print(matchobject)
+            #print(matchobject)
             symbol=matchobject.group(1)
             symboltable[symbol]=instructionnumber+1
             continue
@@ -58,8 +53,7 @@ for line in textfile:
                 ramadress+=1
         instructionnumber+=1
 
-print("1. Durchlauf beendet, Symboltabelle:")
-print(symboltable)
+print("1. Durchlauf beendet, Symboltabelle:\n", symboltable)
 
 textfile=open(tname)
 for line in textfile:
@@ -114,11 +108,8 @@ for line in textfile:
             jump=jumplist[-1].rstrip() # -1 is the index of the last item in list
             comp=jumplist[0].strip()
             dest="null"
-            #print("beginning=",comp)
-            #print("jump=",jump)
 
-        # Endbehandlung der Fälle:
-        #f = open('Add.txt', 'w')
+        # Endbehandlung der Fälle: --------------------------------------------
         # je nach instruction-Typ:
         if instruction=="A":
             print(lineresult)
