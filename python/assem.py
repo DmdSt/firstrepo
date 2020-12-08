@@ -9,8 +9,8 @@ instructionnumber=-1
 ramadress=16
 symboltable=dict()
 symboltable={"R0":0,"R1":1,"R2":2,"R3":3,"R4":4,"R5":5,"R6":6,"R7":7,"R8":8,
-"R9":9,"R10":10,"R11":11,"R12":12,"R13":13,"R14":14,"R15":15,"R16":16,
-"SCREEN":16384,"KBD":24576,"SP":0,"LCL":1,"ARG":2,"THIS":3,"THAT":4}
+"R9":9,"R10":10,"R11":11,"R12":12,"R13":13,"R14":14,"R15":15,"SCREEN":16384,
+"KBD":24576,"SP":0,"LCL":1,"ARG":2,"THIS":3,"THAT":4}
 
 #print('------------------------------------------------------START')
 tname=input('Enter name of text file: ')
@@ -21,7 +21,7 @@ except:
     #print('cannot open textfile!')
     handtext=input('Enter a text by hand: ')
 
-# 1. Durchlauf: Labels und Symbole verarbeiten
+# 1. Durchlauf: Labels finden und speichern
 for line in textfile:
     if not line.strip() or line.startswith("//"): #line.strip = false, wenn Leerzeile
         continue
@@ -33,6 +33,11 @@ for line in textfile:
             symbol=matchobject.group(1)
             symboltable[symbol]=instructionnumber+1
             continue
+        instructionnumber+=1
+
+#2. Durchlauf Variablen festlegen
+textfile=open(tname)
+for line in textfile:
         # Gibt es Randkommentare? Entferne sie.
         foundsidecomments=(line.find("//")!=-1) # find gibt -1 wenn false
         if foundsidecomments:
@@ -48,15 +53,16 @@ for line in textfile:
             # Zeile mit @Stringvariable gefunden
             symbol=newline.strip("@").rstrip()
             # speichern in Symboltabelle, sofern noch nicht vorhanden
-            if symboltable.get(symbol)==None:
+            #all_of_it=textfile.read()
+            if symboltable.get(symbol)==None: #and "("+symbol+")" not in all_of_it:
                 symboltable[symbol]=ramadress
                 ramadress+=1
-        instructionnumber+=1
 
-print("1. Durchlauf beendet, Symboltabelle:\n", symboltable)
+print("Vorläufe beendet, Symboltabelle:\n", symboltable)
 
 textfile=open(tname)
 for line in textfile:
+    instruction=""
     # ignoriere Leerzeilen und Kommentarzeilen
     if not line.strip() or line.startswith("//"): #line.strip = false, wenn Leerzeile
         continue
@@ -80,6 +86,7 @@ for line in textfile:
             #print("This line is an",instruction,"-instruction")
             valuestr=newline.strip("@") # Achtung: valuestr ist ein str
             valuestr=valuestr.rstrip()
+            #print(valuestr)
             try:
                 value=int(valuestr) # convert valuestr to integer
             except:
